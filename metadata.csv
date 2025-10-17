@@ -1,0 +1,10 @@
+organisation,Ministry of Railways
+sectors,"Railways, Infrastructure"
+updated_frequency,Yearly
+granularity,"All India"
+time_saved,2.5 hours
+source,"Indian Railway Year Book"
+source_link,"https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&id=0,1,304,366,554"
+time_period,"1950-51, 1960-61,1970-71,1980-81, 1990-91,2000-01, 2010-11, 2012-13 to 2023-24"
+units,"railway_stations in absolute number"
+citation,"Ministry of Railways. Year-wise Number of Railway Stations in India [Data set]. Dataful. https://dataful.in/datasets/1192/1192"

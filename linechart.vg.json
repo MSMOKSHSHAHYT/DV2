@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Number of Railway Stations over Time",
+  "data": {
+    "url": "station_increase.csv",
+    "format": {"type": "csv"}
+  },
+  "width": 700,
+  "height": 400,
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": true,
+      "fill": "#2c3e50",
+      "size": 80
+    },
+    "color": "#3498db",
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "fiscal_year",
+      "type": "ordinal",
+      "title": "Fiscal Year",
+      "axis": {
+        "labelAngle": -45
+      }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Number of Stations",
+      "scale": {
+        "zero": false
+      }
+    },
+    "tooltip": [
+      {"field": "fiscal_year", "title": "Year"},
+      {"field": "value", "title": "Stations", "format": ","}
+    ]
+  }
+}

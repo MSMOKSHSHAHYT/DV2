@@ -1,0 +1,94 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 900,
+  "height": 700,
+  "projection": {
+    "type": "mercator",
+    "center": [80, 22],
+    "scale": 1000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "india_state.geojson",
+        "format": {"type": "json"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e9ecef",
+        "stroke": "white",
+        "strokeWidth": 0.2
+      }
+    },
+    {
+      "data": {
+        "url": "india_railway_stations.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.zone",
+          "from": {
+            "data": {
+              "values": [
+                {"zone":"CR","zone_full":"Central Railway"},
+                {"zone":"ER","zone_full":"Eastern Railway"},
+                {"zone":"NER","zone_full":"North Eastern Railway"},
+                {"zone":"NFR","zone_full":"Northeast Frontier Railway"},
+                {"zone":"NR","zone_full":"Northern Railway"},
+                {"zone":"NWR","zone_full":"North Western Railway"},
+                {"zone":"SECR","zone_full":"South East Central Railway"},
+                {"zone":"SER","zone_full":"South Eastern Railway"},
+                {"zone":"SCR","zone_full":"South Central Railway"},
+                {"zone":"SR","zone_full":"Southern Railway"},
+                {"zone":"SWR","zone_full":"South Western Railway"},
+                {"zone":"WCR","zone_full":"West Central Railway"},
+                {"zone":"WR","zone_full":"Western Railway"},
+                {"zone":"ECoR","zone_full":"East Coast Railway"},
+                {"zone":"NCR","zone_full":"North Central Railway"},
+                {"zone":"ECR","zone_full":"East Central Railway"}
+              ]
+            },
+            "key": "zone",
+            "fields": ["zone_full"]
+          },
+          "as": ["zone_full"]
+        },
+        {
+          "calculate": "datum.zone_full == null ? 'Inter-State' : datum.zone_full",
+          "as": "zone_full"
+        }
+      ],
+
+      "selection": {
+        "zoneSelect": {
+          "type": "multi",
+          "fields": ["zone_full"],
+          "bind": "legend"
+        }
+      },
+
+      "mark": {"type": "circle", "opacity": 0.9},
+
+      "encoding": {
+        "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
+        "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
+        "size": {"value": 20},
+        "color": {
+          "field": "zone_full",
+          "type": "nominal",
+          "legend": {"title": "Railway Zone"}
+        },
+        "opacity": {
+          "condition": {"selection": "zoneSelect", "value": 1},
+          "value": 0.05
+        },
+        "tooltip": [
+          {"field": "properties.name", "type": "nominal", "title": "Station"},
+          {"field": "properties.code", "type": "nominal", "title": "Code"},
+          {"field": "zone_full", "type": "nominal", "title": "Zone"}
+        ]
+      }
+    }
+  ]
+}
