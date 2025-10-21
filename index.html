@@ -145,35 +145,44 @@ const chartSpecs = [
 ];
 
 const divergingSpec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Diverging bar chart comparing Suburban vs Non-Suburban passengers over years",
-  "data": {"url": "p_data.csv", "format": {"type": "csv"}},
-  "transform": [
-    {"calculate": "datum['Passengers Originating - Sub. (In Millions)']", "as": "suburban"},
-    {"calculate": "datum['Passengers Originating - Non-Sub. (In Millions)']", "as": "non_suburban"},
-    {"fold": ["suburban", "non_suburban"], "as": ["passenger_type", "people"]},
-    {"calculate": "datum.passenger_type == 'suburban' ? 'Suburban' : 'Non-Suburban'", "as": "category"},
-    {"calculate": "datum.passenger_type == 'suburban' ? -datum.people : datum.people", "as": "signed_people"}
-  ],
-  "width": 500,
-  "height": 600,
-  "mark": "bar",
-  "encoding": {
-    "y": {"field": "Year", "type": "nominal", "axis": {"title": "Year"}, "sort": "descending"},
-    "x": {
-      "aggregate": "sum",
-      "field": "signed_people",
-      "title": "Passengers (In Millions)",
-      "axis": {"format": "s", "labelExpr": "abs(datum.value)"}
-    },
-    "color": {
-      "field": "category",
-      "scale": {"domain": ["Suburban", "Non-Suburban"], "range": ["#6a994e", "#a7c957"]},
-      "legend": {"orient": "top", "title": null}
-    }
+"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+"description": "Diverging bar chart comparing Suburban vs Non-Suburban passengers over years",
+"data": {"url": "p_data.csv", "format": {"type": "csv"}},
+"transform": [
+  {"calculate": "datum['Passengers Originating - Sub. (In Millions)']", "as": "suburban"},
+  {"calculate": "datum['Passengers Originating - Non-Sub. (In Millions)']", "as": "non_suburban"},
+  {"fold": ["suburban", "non_suburban"], "as": ["passenger_type", "people"]},
+  {"calculate": "datum.passenger_type == 'suburban' ? 'Suburban' : 'Non-Suburban'", "as": "category"},
+  {"calculate": "datum.passenger_type == 'suburban' ? -datum.people : datum.people", "as": "signed_people"}
+],
+"width": 500,
+"height": 600,
+"mark": "bar",
+"encoding": {
+  "y": {
+    "field": "Year",
+    "type": "nominal",
+    "axis": {"title": "Year"},
+    "sort": "descending"
   },
-  "config": {"view": {"stroke": null}, "axis": {"grid": false}}
-};
+  "x": {
+    "aggregate": "sum",
+    "field": "signed_people",
+    "title": "Passengers (In Millions)",
+    "axis": {"format": "s", "labelExpr": "abs(datum.value)"}
+  },
+  "color": {
+    "field": "category",
+    "scale": {"domain": ["Suburban", "Non-Suburban"], "range": ["#6a994e", "#a7c957"]},
+    "legend": {"orient": "top", "title": null}
+  },
+  "tooltip": [
+    {"field": "Year", "type": "nominal", "title": "Year"},
+    {"field": "category", "type": "nominal", "title": "Passenger Type"},
+    {"aggregate": "sum", "field": "people", "type": "quantitative", "title": "Passengers (Millions)", "format": ",.2f"}
+  ]
+},
+"config": {"view": {"stroke": null}, "axis": {"grid": false}}};
 
 const specFiles = {
   "#railwaymap": "railwaymap.vg.json",
