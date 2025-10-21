@@ -5,6 +5,7 @@
     "url": "station_increase.csv",
     "format": {"type": "csv"}
   },
+  "title": "Station Increase Line Chart",
   "width": 600,
   "height": 300,
   "mark": {

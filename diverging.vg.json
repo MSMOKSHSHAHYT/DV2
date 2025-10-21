@@ -27,6 +27,7 @@
       "as": "signed_people"
     }
   ],
+  "title": "Urban and Sub-Urban Passengers",
   "width": 500,
   "height": 600,
   "mark": "bar",
