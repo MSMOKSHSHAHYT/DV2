@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chart Test</title>
-<!-- Vega Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -39,28 +38,35 @@ body {
   line-height: 1.6;
   margin-bottom: 15px;
 }
-.metadata {
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid #e0e0e0;
-  font-size: 0.85em;
-  color: #555;
-  line-height: 1.5em;
-}
-.metadata p {
-  margin: 5px 0;
-}
-.metadata a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-.metadata a:hover {
-  text-decoration: underline;
-}
 h1 {
   text-align: center;
   color: #333;
   margin-bottom: 40px;
+}
+#data-sources {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 20px;
+}
+#data-sources h2 {
+  text-align: center;
+  color: #333;
+}
+#data-sources ul {
+  color: #555;
+  font-size: 0.95em;
+  line-height: 1.6em;
+}
+#data-sources a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+#data-sources a:hover {
+  text-decoration: underline;
 }
 </style>
 </head>
@@ -70,49 +76,44 @@ h1 {
 <div class="chart">
   <div class="chart-content" id="diverging"></div>
   <p class="chart-description">This is a placeholder description for the diverging chart.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/diverging-data" target="_blank">Example Dataset</a></p>
-  </div>
 </div>
 
 <div class="chart">
   <div class="chart-content" id="linechart"></div>
   <p class="chart-description">This is a placeholder description for the line chart.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/line-data" target="_blank">Time Series Dataset</a></p>
-  </div>
 </div>
 
 <div class="chart">
   <div class="chart-content" id="railwaymap"></div>
   <p class="chart-description">This is a placeholder description for the railway map.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/railway-data" target="_blank">Railway Dataset</a> | <a href="https://example.com/geo-data" target="_blank">Geographic Data</a></p>
-  </div>
 </div>
 
 <div class="chart">
   <div class="chart-content" id="station_linechart"></div>
   <p class="chart-description">This is a placeholder description for the station line chart.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/station-data" target="_blank">Station Usage Dataset</a></p>
-  </div>
 </div>
 
 <div class="chart">
   <div class="chart-content" id="symbolmap"></div>
   <p class="chart-description">This is a placeholder description for the symbol map.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/symbol-data" target="_blank">Geographic Dataset</a></p>
-  </div>
 </div>
 
 <div class="chart">
   <div class="chart-content" id="piechart"></div>
   <p class="chart-description">This is a placeholder description for the pie chart.</p>
-  <div class="metadata">
-    <p><strong>Data Source:</strong> <a href="https://example.com/pie-data" target="_blank">Category Dataset</a></p>
-  </div>
+</div>
+
+<div id="data-sources">
+  <h2>Data Sources</h2>
+  <ul>
+    <li><a href="https://example.com/diverging-data" target="_blank">Diverging Dataset</a></li>
+    <li><a href="https://example.com/line-data" target="_blank">Time Series Dataset</a></li>
+    <li><a href="https://example.com/railway-data" target="_blank">Railway Dataset</a></li>
+    <li><a href="https://example.com/geo-data" target="_blank">Geographic Data</a></li>
+    <li><a href="https://example.com/station-data" target="_blank">Station Usage Dataset</a></li>
+    <li><a href="https://example.com/symbol-data" target="_blank">Symbol Map Dataset</a></li>
+    <li><a href="https://example.com/pie-data" target="_blank">Category Dataset</a></li>
+  </ul>
 </div>
 
 <script>
@@ -139,12 +140,7 @@ for (const id of chartSpecs) {
     .then(resp => resp.json())
     .then(spec => {
       vegaEmbed(id, spec, {
-        actions: {
-          export: true,
-          source: true,
-          editor: true,
-          compiled: false
-        },
+        actions: { export: true, source: true, editor: true, compiled: false },
         renderer: "svg"
       });
     })

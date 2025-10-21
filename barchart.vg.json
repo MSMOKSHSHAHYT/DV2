@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": "Indian Railway Revenue: Passenger vs Freight (1950-2010)",
+  "width": 800,
+  "height": 450,
+  "data": {"url": "railway_revenue.csv"},
+  "transform": [
+    {
+      "fold": ["Passenger_Earnings", "Freight_Earnings"],
+      "as": ["Revenue_Type", "Amount"]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 3,
+        "cornerRadiusTopRight": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "axis": {"title": "Year", "labelAngle": -45}
+        },
+        "y": {
+          "field": "Amount",
+          "type": "quantitative",
+          "axis": {"title": "Revenue (₹ Crore)"}
+        },
+        "color": {
+          "field": "Revenue_Type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Freight_Earnings","Passenger_Earnings"],
+            "range": ["#6a994e", "#a7c957"]
+          },
+          "legend": {
+            "title": "Revenue Type",
+            "labelExpr": "datum.value == 'Passenger_Earnings' ? 'Passenger Revenue' : 'Freight Revenue'"
+          }
+        },
+        "tooltip": [
+          {"field": "Year", "type": "ordinal", "title": "Year"},
+          {"field": "Revenue_Type", "type": "nominal", "title": "Type"},
+          {"field": "Amount", "type": "quantitative", "title": "Revenue (₹ Crore)", "format": ",.2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "sum", "field": "Amount", "as": "TotalRevenue"}],
+          "groupby": ["Year"]
+        },
+        {
+          "filter": "datum.Year == 2008 || datum.Year == 2009 || datum.Year == 2010"
+        }
+      ],
+      "mark": {"type": "text", "dy": -5, "fontSize": 12, "fontWeight": "bold", "color": "black"},
+      "encoding": {
+        "x": {"field": "Year", "type": "ordinal"},
+        "y": {"field": "TotalRevenue", "type": "quantitative"},
+        "text": {"field": "TotalRevenue", "type": "quantitative", "format": ",.0f"}
+      }
+    }
+  ]
+}

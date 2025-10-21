@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Indian Railway Revenue Freight Traffic by Gauge Type (1950-2013)",
+  "width": 800,
+  "height": 450,
+  "data": {"url": "f_data.csv"},
+  "transform": [
+    {
+      "calculate": "toNumber(datum.Revenue_Total) - toNumber(datum.Revenue_Broad_Gauge) - toNumber(datum.Revenue_Metre_Gauge)",
+      "as": "Revenue_Narrow_Gauge"
+    },
+    {
+      "fold": [
+        "Revenue_Broad_Gauge",
+        "Revenue_Metre_Gauge",
+        "Revenue_Narrow_Gauge"
+      ],
+      "as": ["Gauge_Type", "Traffic_Volume"]
+    },
+    {
+      "filter": "datum.Traffic_Volume != 'Not recorded separately'"
+    },
+    {
+      "calculate": "toNumber(datum.Traffic_Volume)",
+      "as": "Traffic_Volume_Numeric"
+    },
+    {
+      "calculate": "datum.Gauge_Type == 'Revenue_Broad_Gauge' ? 'Broad Gauge' : datum.Gauge_Type == 'Revenue_Metre_Gauge' ? 'Metre Gauge' : 'Narrow Gauge'",
+      "as": "Gauge_Type_Clean"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": true,
+      "size": 60
+    },
+    "strokeWidth": 2.5
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "quantitative",
+      "axis": {
+        "title": "Year",
+        "format": "d",
+        "tickCount": 10
+      }
+    },
+    "y": {
+      "field": "Traffic_Volume_Numeric",
+      "type": "quantitative",
+      "axis": {
+        "title": "Revenue Freight Traffic (Million Net Tonne Km)"
+      }
+    },
+    "color": {
+      "field": "Gauge_Type",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Revenue_Broad_Gauge",
+          "Revenue_Metre_Gauge",
+          "Revenue_Narrow_Gauge"
+        ],
+        "range": ["#386641", "#6a994e", "#a7c957"]
+      },
+      "legend": {
+        "title": "Gauge Type (Revenue Traffic Only)",
+        "labelExpr": "datum.value == 'Revenue_Broad_Gauge' ? 'Broad Gauge' : datum.value == 'Revenue_Metre_Gauge' ? 'Metre Gauge' : 'Narrow Gauge'"
+      }
+    },
+    "tooltip": [
+      {"field": "Year", "type": "quantitative", "format": "d", "title": "Year"},
+      {
+        "field": "Gauge_Type_Clean", 
+        "type": "nominal", 
+        "title": "Gauge Type"
+      },
+      {
+        "field": "Traffic_Volume_Numeric", 
+        "type": "quantitative", 
+        "title": "Traffic Volume", 
+        "format": ",.0f"
+      }
+    ]
+  }
+}

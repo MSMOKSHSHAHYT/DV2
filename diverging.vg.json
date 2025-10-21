@@ -48,7 +48,7 @@
     },
     "color": {
       "field": "category",
-      "scale": {"range": ["#675193", "#ca8861"]},
+      "scale": {"range": ["#6a994e", "#a7c957"]},
       "legend": {"orient": "top", "title": null}
     }
   },

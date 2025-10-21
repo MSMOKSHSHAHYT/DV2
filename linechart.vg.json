@@ -11,10 +11,10 @@
     "type": "line",
     "point": {
       "filled": true,
-      "fill": "#2c3e50",
+      "fill": "#386641",
       "size": 80
     },
-    "color": "#3498db",
+    "color": "#a7c957",
     "strokeWidth": 3
   },
   "encoding": {
