@@ -1,86 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
- <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
- <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
- <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
- <style>
-/* Reset defaults */
-* {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
-}
-html, body {
- width: 100%;
- height: 100%;
-}
-body {
- font-family: Arial, sans-serif;
- background-color: #f5f5f5;
-}
-/* This defines your "content column" */
-.container {
- width: 80%; /* control how much white space you want */
- max-width: 1200px; /* keeps it neat on large screens */
- margin: 0 auto; /* centers horizontally */
- background-color: white;
- box-shadow: 0 0 8px rgba(0,0,0,0.05); /* subtle framing effect */
-}
-.banner {
- display: block;
- width: 100%; /* fits within the white column */
- height: auto; /* keeps proportions */
-}
-/* Stacked visualizations */
-.vis-wrapper {
- width: 100%;
- padding: 20px;
- margin-bottom: 20px;
-}
-.vis-description {
- padding: 20px 20px 0 20px;
- color: #333;
- line-height: 1.6;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chart Test</title>
+  <!-- Vega Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #fafafa;
+    }
+    .chart {
+      display: block;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto 40px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 20px;
+      clear: both;
+    }
+    .chart-content {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .chart-description {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 40px;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<img src="banner.png" alt="Banner" class="banner">
-<p class="vis-description">This network map shows the extensive railway infrastructure across India, displaying the interconnected rail routes that span the country.</p>
-<div id="vis1" class="vis-wrapper"></div>
-<p class="vis-description">This density map reveals station distribution across India, highlighting regions with high concentrations of railway stations.</p>
-<div id="vis2" class="vis-wrapper"></div>
-<p class="vis-description">This area chart tracks the evolution of railway track gauges over time, showing how different gauge types have developed throughout India's railway history.</p>
-<div id="vis3" class="vis-wrapper"></div>
-<p class="vis-description">This visualization illustrates the growth of railway stations over time, demonstrating the expansion of India's railway network.</p>
-<div id="vis4" class="vis-wrapper"></div>
-<p class="vis-description">This chart compares suburban and urban railway ridership, showing how many passengers use trains in different contexts.</p>
-<div id="vis5" class="vis-wrapper"></div>
-<p class="vis-description">Still a draft need to add more visualizations and font.</p>
-</div>
- <script>
-// Array of visualization files in order
-const visualizations = [
-  { id: '#vis1', file: 'railwaymap.vg.json' },
-  { id: '#vis2', file: 'symbolmap.vg.json' },
-  { id: '#vis3', file: 'station_linechart.vg.json' },
-  { id: '#vis4', file: 'linechart.vg.json' },
-  { id: '#vis5', file: 'diverging.vg.json' }
-];
+  <h1>Vega-Lite Chart Test</h1>
+  
+  <div class="chart">
+    <div class="chart-content" id="diverging"></div>
+    <p class="chart-description">This is a placeholder description for the diverging chart.</p>
+  </div>
+  
+  <div class="chart">
+    <div class="chart-content" id="linechart"></div>
+    <p class="chart-description">This is a placeholder description for the line chart.</p>
+  </div>
+  
+  <div class="chart">
+    <div class="chart-content" id="railwaymap"></div>
+    <p class="chart-description">This is a placeholder description for the railway map.</p>
+  </div>
+  
+  <div class="chart">
+    <div class="chart-content" id="station_linechart"></div>
+    <p class="chart-description">This is a placeholder description for the station line chart.</p>
+  </div>
+  
+  <div class="chart">
+    <div class="chart-content" id="symbolmap"></div>
+    <p class="chart-description">This is a placeholder description for the symbol map.</p>
+  </div>
+  
+  <div class="chart">
+    <div class="chart-content" id="piechart"></div>
+    <p class="chart-description">This is a placeholder description for the pie chart.</p>
+  </div>
+  
+  <script>
+    const chartData = {
+  "#diverging": {
+    spec: "diverging.vg.json",
+    dataSource: "https://example.com/diverging-data"
+  },
+  "#linechart": {
+    spec: "linechart.vg.json",
+    dataSource: "https://example.com/line-data"
+  },
+  "#railwaymap": {
+    spec: "railwaymap.vg.json",
+    dataSource: "https://example.com/railway-data"
+  },
+  "#station_linechart": {
+    spec: "station_linechart.vg.json",
+    dataSource: "https://example.com/station-data"
+  },
+  "#symbolmap": {
+    spec: "symbolmap.vg.json",
+    dataSource: "https://example.com/symbol-data"
+  },
+  "#piechart": {
+    spec: "piechart.vg.json",
+    dataSource: "https://example.com/pie-data"
+  }
+};
 
-// Load and embed all visualizations
-visualizations.forEach(vis => {
-  fetch(vis.file)
-    .then(response => response.json())
+for (const [id, data] of Object.entries(chartData)) {
+  fetch(data.spec)
+    .then(resp => resp.json())
     .then(spec => {
-      vegaEmbed(vis.id, spec, {actions: false}).catch(console.error);
+      vegaEmbed(id, spec, {
+        actions: {
+          export: true,
+          source: true,
+          editor: true,
+          compiled: false
+        },
+        links: {
+          custom: [
+            {
+              name: "View Data Source",
+              url: data.dataSource
+            }
+          ]
+        },
+        renderer: "svg"
+      });
     })
-    .catch(error => console.error(`Error loading ${vis.file}:`, error));
-});
+    .catch(err => {
+      document.querySelector(id).innerHTML = "<p>Failed to load chart</p>";
+      console.error(err);
+    });
+}
 </script>
 </body>
 </html>

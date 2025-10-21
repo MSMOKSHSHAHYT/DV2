@@ -1,24 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 900,
-  "height": 700,
-  "projection": {
-    "type": "mercator",
-    "center": [80, 22],
-    "scale": 1000
-  },
+  "width": 600,
+  "height": 600,
+  "background": "#95D3E6",
+  "projection": {"type": "mercator", "center": [80, 22], "scale": 1000},
   "layer": [
     {
-      "data": {
-        "url": "india_state.geojson",
-        "format": {"type": "json"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#e9ecef",
-        "stroke": "white",
-        "strokeWidth": 0.2
-      }
+      "data": {"url": "india_state.geojson", "format": {"type": "json"}},
+      "mark": {"type": "geoshape", "fill": "#e9ecef", "stroke": "white", "strokeWidth": 0.2}
     },
     {
       "data": {
@@ -54,40 +43,34 @@
           },
           "as": ["zone_full"]
         },
-        {
-          "calculate": "datum.zone_full == null ? 'Inter-State' : datum.zone_full",
-          "as": "zone_full"
-        }
+        {"calculate": "datum.zone_full == null ? 'Inter-State' : datum.zone_full", "as": "zone_full"}
       ],
-
-      "selection": {
-        "zoneSelect": {
-          "type": "multi",
-          "fields": ["zone_full"],
-          "bind": "legend"
-        }
-      },
-
+      "selection": {"zoneSelect": {"type": "multi", "fields": ["zone_full"], "bind": "legend"}},
       "mark": {"type": "circle", "opacity": 0.9},
-
       "encoding": {
         "longitude": {"field": "geometry.coordinates[0]", "type": "quantitative"},
         "latitude": {"field": "geometry.coordinates[1]", "type": "quantitative"},
-        "size": {"value": 20},
+        "size": {"value": 10},
         "color": {
           "field": "zone_full",
           "type": "nominal",
-          "legend": {"title": "Railway Zone"}
+          "legend": {"title": "Railway Zone"},
+          "scale": {
+            "domain": [
+              "Central Railway","Eastern Railway","North Eastern Railway","Northeast Frontier Railway",
+              "Northern Railway","North Western Railway","South East Central Railway","South Eastern Railway",
+              "South Central Railway","Southern Railway","South Western Railway","West Central Railway",
+              "Western Railway","East Coast Railway","North Central Railway","East Central Railway","Inter-State"
+            ],
+            "range": [
+            "#E69F00", "#35596e", "#009E73", "#F0E442", "#06344f",
+            "#D55E00", "#CC79A7", "#999999", "#077ca3", "#228833",
+            "#EE6677", "#AA3377", "#BBBBBB", "#44AA99", "#DDCC77",
+            "#117733", "#b2a6ed"
+          ]
+          }
         },
-        "opacity": {
-          "condition": {"selection": "zoneSelect", "value": 1},
-          "value": 0.05
-        },
-        "tooltip": [
-          {"field": "properties.name", "type": "nominal", "title": "Station"},
-          {"field": "properties.code", "type": "nominal", "title": "Code"},
-          {"field": "zone_full", "type": "nominal", "title": "Zone"}
-        ]
+        "opacity": {"condition": {"selection": "zoneSelect", "value": 1}, "value": 0.05}
       }
     }
   ]

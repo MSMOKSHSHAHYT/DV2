@@ -1,0 +1,69 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Distribution of Indian Railway Stations by Zone",
+  "title": "Railway Stations by Zone",
+  "width": 400,
+  "height": 300,
+  "data": {"url": "india_railway_stations.geojson", "format": {"type": "json", "property": "features"}},
+  "transform": [
+    {
+      "lookup": "properties.zone",
+      "from": {
+        "data": {
+          "values": [
+            {"zone":"CR","zone_full":"Central Railway"},
+            {"zone":"ER","zone_full":"Eastern Railway"},
+            {"zone":"NER","zone_full":"North Eastern Railway"},
+            {"zone":"NFR","zone_full":"Northeast Frontier Railway"},
+            {"zone":"NR","zone_full":"Northern Railway"},
+            {"zone":"NWR","zone_full":"North Western Railway"},
+            {"zone":"SECR","zone_full":"South East Central Railway"},
+            {"zone":"SER","zone_full":"South Eastern Railway"},
+            {"zone":"SCR","zone_full":"South Central Railway"},
+            {"zone":"SR","zone_full":"Southern Railway"},
+            {"zone":"SWR","zone_full":"South Western Railway"},
+            {"zone":"WCR","zone_full":"West Central Railway"},
+            {"zone":"WR","zone_full":"Western Railway"},
+            {"zone":"ECoR","zone_full":"East Coast Railway"},
+            {"zone":"NCR","zone_full":"North Central Railway"},
+            {"zone":"ECR","zone_full":"East Central Railway"}
+          ]
+        },
+        "key": "zone",
+        "fields": ["zone_full"]
+      }
+    },
+    {"calculate": "datum.zone_full == null ? 'Inter-State' : datum.zone_full", "as": "zone_full"},
+    {"aggregate": [{"op": "count", "as": "station_count"}], "groupby": ["zone_full"]},
+    {"window": [{"op": "sum", "field": "station_count", "as": "total_stations"}], "frame": [null, null]},
+    {"calculate": "datum.station_count / datum.total_stations * 100", "as": "percentage"}
+  ],
+  "mark": {"type": "arc", "innerRadius": 80, "tooltip": true},
+  "encoding": {
+    "theta": {"field": "station_count", "type": "quantitative", "stack": "normalize"},
+    "color": {
+      "field": "zone_full",
+      "type": "nominal",
+      "legend": {"title": "Railway Zone"},
+      "scale": {
+        "domain": [
+          "Central Railway","Eastern Railway","North Eastern Railway","Northeast Frontier Railway",
+          "Northern Railway","North Western Railway","South East Central Railway","South Eastern Railway",
+          "South Central Railway","Southern Railway","South Western Railway","West Central Railway",
+          "Western Railway","East Coast Railway","North Central Railway","East Central Railway","Inter-State"
+        ],
+        "range": [
+            "#E69F00", "#35596e", "#009E73", "#F0E442", "#06344f",
+            "#D55E00", "#CC79A7", "#999999", "#077ca3", "#228833",
+            "#EE6677", "#AA3377", "#BBBBBB", "#44AA99", "#DDCC77",
+            "#117733", "#b2a6ed"
+          ]
+      }
+    },
+    "tooltip": [
+      {"field": "zone_full", "type": "nominal", "title": "Zone"},
+      {"field": "station_count", "type": "quantitative", "title": "Number of Stations"},
+      {"field": "percentage", "type": "quantitative", "title": "Percentage (%)", "format": ".1f"}
+    ]
+  }
+}
