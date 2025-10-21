@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "title": "Indian Railway Revenue: Passenger vs Freight (1950-2010)",
-  "width": 800,
+  "width": 550,
   "height": 450,
   "data": {"url": "railway_revenue.csv"},
   "transform": [

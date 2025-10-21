@@ -47,10 +47,13 @@
       }
     },
     "color": {
-      "field": "category",
-      "scale": {"range": ["#6a994e", "#a7c957"]},
-      "legend": {"orient": "top", "title": null}
-    }
+    "field": "category",
+    "scale": {
+      "domain": ["Suburban", "Non-Suburban"],
+      "range": ["#6a994e", "#a7c957"]
+    },
+    "legend": {"orient": "top", "title": null}
+  }
   },
   "config": {
     "view": {"stroke": null},
