@@ -21,7 +21,7 @@
     "x": {
       "field": "fiscal_year",
       "type": "ordinal",
-      "title": "Fiscal Year",
+      "title": "Year",
       "axis": {
         "labelAngle": -45
       }
